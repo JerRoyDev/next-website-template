@@ -1,0 +1,259 @@
+{
+  "Metadata": {
+    "home": {
+      "title": "Hem",
+      "description": "Välkommen till {siteName} – kvalitet, engagemang och resultat."
+    },
+    "about": {
+      "title": "Om oss",
+      "description": "Lär känna teamet bakom {siteName}."
+    },
+    "services": {
+      "title": "Tjänster",
+      "description": "Utforska våra tjänster och hur vi kan hjälpa dig."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Kontakta oss så berättar vi mer."
+    },
+    "blog": {
+      "title": "Blogg",
+      "description": "Senaste nytt och insikter från {siteName}."
+    },
+    "privacy": {
+      "title": "Integritetspolicy",
+      "description": "Läs vår integritetspolicy och hur vi hanterar dina uppgifter."
+    },
+    "faq": {
+      "title": "Vanliga frågor",
+      "description": "Svar på vanliga frågor om våra tjänster."
+    }
+  },
+  "Navigation": {
+    "home": "Hem",
+    "about": "Om oss",
+    "services": "Tjänster",
+    "blog": "Blogg",
+    "contact": "Kontakt",
+    "faq": "FAQ"
+  },
+  "Hero": {
+    "title": "Rubrik som beskriver ert erbjudande",
+    "subtitle": "En kort mening som förklarar vad ni gör och varför kunden ska välja er.",
+    "cta": "Kontakta oss",
+    "ctaSecondary": "Våra tjänster"
+  },
+  "Features": {
+    "title": "Varför välja oss",
+    "subtitle": "Det som gör oss till rätt val för dig.",
+    "feature1": {
+      "title": "Fördel ett",
+      "description": "Beskriv en styrka eller egenskap som särskiljer ert erbjudande."
+    },
+    "feature2": {
+      "title": "Fördel två",
+      "description": "Beskriv ännu en fördel som skapar mervärde för kunden."
+    },
+    "feature3": {
+      "title": "Fördel tre",
+      "description": "Beskriv en tredje fördel som stärker kundens förtroende."
+    }
+  },
+  "CTA": {
+    "title": "Redo att ta nästa steg?",
+    "subtitle": "Hör av dig så berättar vi mer om hur vi kan hjälpa just er.",
+    "button": "Kom igång"
+  },
+  "Testimonials": {
+    "title": "Vad våra kunder säger",
+    "items": [
+      {
+        "quote": "Enastående resultat – de levererade precis det vi behövde, i tid och inom budget.",
+        "author": "Förnamn Efternamn",
+        "role": "Roll, Företag AB"
+      },
+      {
+        "quote": "Professionell service och hög kvalitet. Vi kan verkligen rekommendera dem.",
+        "author": "Förnamn Efternamn",
+        "role": "Roll, Företag AB"
+      },
+      {
+        "quote": "De förstod våra behov direkt och överträffade våra förväntningar.",
+        "author": "Förnamn Efternamn",
+        "role": "Roll, Företag AB"
+      }
+    ]
+  },
+  "About": {
+    "title": "Om oss",
+    "intro": "Vi är ett engagerat team med passion för det vi gör och en vilja att leverera resultat.",
+    "story": {
+      "title": "Vår historia",
+      "content": "Beskriv företagets bakgrund, vision och vad som driver er framåt. Lyft det som gör ert företag unikt."
+    },
+    "team": {
+      "title": "Vårt team",
+      "members": [
+        {
+          "name": "Förnamn Efternamn",
+          "role": "Roll / Titel",
+          "bio": "Kort beskrivning av personens bakgrund och ansvarsområde."
+        },
+        {
+          "name": "Förnamn Efternamn",
+          "role": "Roll / Titel",
+          "bio": "Kort beskrivning av personens bakgrund och ansvarsområde."
+        },
+        {
+          "name": "Förnamn Efternamn",
+          "role": "Roll / Titel",
+          "bio": "Kort beskrivning av personens bakgrund och ansvarsområde."
+        }
+      ]
+    }
+  },
+  "Services": {
+    "title": "Våra tjänster",
+    "subtitle": "Vi erbjuder tjänster anpassade efter era behov.",
+    "items": [
+      {
+        "title": "Tjänst 1",
+        "description": "Kort beskrivning av vad tjänsten innebär och vilken nytta den ger."
+      },
+      {
+        "title": "Tjänst 2",
+        "description": "Kort beskrivning av vad tjänsten innebär och vilken nytta den ger."
+      },
+      {
+        "title": "Tjänst 3",
+        "description": "Kort beskrivning av vad tjänsten innebär och vilken nytta den ger."
+      },
+      {
+        "title": "Tjänst 4",
+        "description": "Kort beskrivning av vad tjänsten innebär och vilken nytta den ger."
+      }
+    ]
+  },
+  "Contact": {
+    "title": "Kontakta oss",
+    "subtitle": "Fyll i formuläret nedan så återkommer vi inom kort.",
+    "form": {
+      "name": "Namn",
+      "namePlaceholder": "Ditt namn",
+      "email": "E-post",
+      "emailPlaceholder": "din@epost.se",
+      "phone": "Telefon",
+      "phonePlaceholder": "070-123 45 67",
+      "message": "Meddelande",
+      "messagePlaceholder": "Berätta vad vi kan hjälpa dig med...",
+      "submit": "Skicka meddelande",
+      "submitting": "Skickar...",
+      "success": "Tack! Vi har mottagit ditt meddelande och återkommer snart.",
+      "error": "Något gick fel. Försök igen eller kontakta oss direkt."
+    },
+    "validation": {
+      "nameRequired": "Namn krävs",
+      "nameMin": "Namnet måste vara minst 2 tecken",
+      "emailRequired": "E-post krävs",
+      "emailInvalid": "Ange en giltig e-postadress",
+      "messageRequired": "Meddelande krävs",
+      "messageMin": "Meddelandet måste vara minst 10 tecken"
+    },
+    "info": {
+      "title": "Kontaktuppgifter",
+      "email": "info@example.com",
+      "phone": "+46 70 123 45 67",
+      "address": "Gatuadress 1, 123 45 Stad"
+    }
+  },
+  "Blog": {
+    "title": "Blogg",
+    "subtitle": "Senaste nytt, tips och insikter.",
+    "readMore": "Läs mer",
+    "backToBlog": "Tillbaka till bloggen",
+    "publishedAt": "Publicerad",
+    "posts": [
+      {
+        "slug": "forsta-inlagget",
+        "title": "Välkommen till vår blogg",
+        "excerpt": "Här delar vi med oss av nyheter, insikter och tips inom vårt område.",
+        "date": "2026-01-15",
+        "content": "Det här är ett exempelinlägg. Byt ut texten med riktigt innehåll när ni anpassar mallen."
+      },
+      {
+        "slug": "tips-och-rad",
+        "title": "5 tips för att komma igång",
+        "excerpt": "Praktiska råd som hjälper dig att ta de första stegen.",
+        "date": "2026-02-10",
+        "content": "Här delar vi fem enkla tips som hjälper dig att komma igång. Byt ut texten med innehåll som passar er verksamhet."
+      }
+    ]
+  },
+  "FAQ": {
+    "title": "Vanliga frågor",
+    "subtitle": "Här hittar du svar på de vanligaste frågorna.",
+    "items": [
+      {
+        "question": "Hur lång tid tar det?",
+        "answer": "Det beror på omfattningen. Kontakta oss så ger vi en tidsuppskattning baserad på era behov."
+      },
+      {
+        "question": "Vad kostar det?",
+        "answer": "Vi skräddarsyr offerter. Kontakta oss för en kostnadsfri bedömning."
+      },
+      {
+        "question": "Erbjuder ni löpande support?",
+        "answer": "Ja, vi erbjuder support och uppföljning så att allt fungerar som det ska."
+      },
+      {
+        "question": "Hur kommer jag igång?",
+        "answer": "Hör av dig via kontaktformuläret så tar vi det därifrån."
+      }
+    ]
+  },
+  "Privacy": {
+    "title": "Integritetspolicy",
+    "lastUpdated": "Senast uppdaterad: {date}",
+    "sections": [
+      {
+        "title": "Vilka uppgifter samlar vi in?",
+        "content": "Vi samlar in personuppgifter som du frivilligt lämnar via våra kontaktformulär, såsom namn, e-postadress och telefonnummer."
+      },
+      {
+        "title": "Hur använder vi dina uppgifter?",
+        "content": "Dina uppgifter används enbart för att besvara din förfrågan och förbättra vår service. Vi säljer aldrig dina uppgifter till tredje part."
+      },
+      {
+        "title": "Cookies",
+        "content": "Vi använder cookies för att förbättra din upplevelse. Analytiska cookies (Google Analytics) aktiveras först efter ditt samtycke. Vi använder även cookiefria analysverktyg som inte kräver samtycke."
+      },
+      {
+        "title": "Dina rättigheter",
+        "content": "Du har rätt att begära tillgång till, rättelse eller radering av dina personuppgifter. Kontakta oss för att utöva dina rättigheter."
+      }
+    ]
+  },
+  "Footer": {
+    "quickLinks": "Snabblänkar",
+    "contact": "Kontakt",
+    "followUs": "Följ oss",
+    "rights": "Alla rättigheter förbehållna.",
+    "privacy": "Integritetspolicy"
+  },
+  "CookieBanner": {
+    "message": "Vi använder cookies för att förbättra din upplevelse och analysera trafik.",
+    "accept": "Acceptera",
+    "decline": "Avvisa",
+    "learnMore": "Läs mer"
+  },
+  "Error": {
+    "title": "Något gick fel",
+    "description": "Ett oväntat fel uppstod. Försök igen.",
+    "retry": "Försök igen"
+  },
+  "NotFound": {
+    "title": "Sidan hittades inte",
+    "description": "Sidan du letar efter finns inte eller har flyttats.",
+    "backHome": "Tillbaka till startsidan"
+  }
+}

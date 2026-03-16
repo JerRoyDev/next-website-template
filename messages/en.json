@@ -1,0 +1,259 @@
+{
+  "Metadata": {
+    "home": {
+      "title": "Home",
+      "description": "Welcome to {siteName} – quality, commitment and results."
+    },
+    "about": {
+      "title": "About Us",
+      "description": "Get to know the team behind {siteName}."
+    },
+    "services": {
+      "title": "Services",
+      "description": "Explore our services and how we can help you."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Get in touch and we'll tell you more."
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Latest news and insights from {siteName}."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Read our privacy policy and how we handle your data."
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Answers to frequently asked questions about our services."
+    }
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "blog": "Blog",
+    "contact": "Contact",
+    "faq": "FAQ"
+  },
+  "Hero": {
+    "title": "A headline that describes your offering",
+    "subtitle": "A short sentence explaining what you do and why the customer should choose you.",
+    "cta": "Contact us",
+    "ctaSecondary": "Our services"
+  },
+  "Features": {
+    "title": "Why choose us",
+    "subtitle": "What makes us the right choice for you.",
+    "feature1": {
+      "title": "Benefit one",
+      "description": "Describe a strength or quality that sets your offering apart."
+    },
+    "feature2": {
+      "title": "Benefit two",
+      "description": "Describe another advantage that creates added value for the customer."
+    },
+    "feature3": {
+      "title": "Benefit three",
+      "description": "Describe a third benefit that builds customer confidence."
+    }
+  },
+  "CTA": {
+    "title": "Ready to take the next step?",
+    "subtitle": "Get in touch and we'll tell you more about how we can help.",
+    "button": "Get started"
+  },
+  "Testimonials": {
+    "title": "What our clients say",
+    "items": [
+      {
+        "quote": "Outstanding results – they delivered exactly what we needed, on time and within budget.",
+        "author": "First Last",
+        "role": "Role, Company Ltd"
+      },
+      {
+        "quote": "Professional service and high quality. We truly recommend them.",
+        "author": "First Last",
+        "role": "Role, Company Ltd"
+      },
+      {
+        "quote": "They understood our needs immediately and exceeded our expectations.",
+        "author": "First Last",
+        "role": "Role, Company Ltd"
+      }
+    ]
+  },
+  "About": {
+    "title": "About us",
+    "intro": "We are a committed team with a passion for what we do and a drive to deliver results.",
+    "story": {
+      "title": "Our story",
+      "content": "Describe the company's background, vision and what drives you forward. Highlight what makes your business unique."
+    },
+    "team": {
+      "title": "Our team",
+      "members": [
+        {
+          "name": "First Last",
+          "role": "Role / Title",
+          "bio": "Short description of this person's background and area of responsibility."
+        },
+        {
+          "name": "First Last",
+          "role": "Role / Title",
+          "bio": "Short description of this person's background and area of responsibility."
+        },
+        {
+          "name": "First Last",
+          "role": "Role / Title",
+          "bio": "Short description of this person's background and area of responsibility."
+        }
+      ]
+    }
+  },
+  "Services": {
+    "title": "Our services",
+    "subtitle": "We offer services tailored to your needs.",
+    "items": [
+      {
+        "title": "Service 1",
+        "description": "Short description of what this service involves and the value it provides."
+      },
+      {
+        "title": "Service 2",
+        "description": "Short description of what this service involves and the value it provides."
+      },
+      {
+        "title": "Service 3",
+        "description": "Short description of what this service involves and the value it provides."
+      },
+      {
+        "title": "Service 4",
+        "description": "Short description of what this service involves and the value it provides."
+      }
+    ]
+  },
+  "Contact": {
+    "title": "Contact us",
+    "subtitle": "Fill in the form below and we'll get back to you shortly.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+46 70 123 45 67",
+      "message": "Message",
+      "messagePlaceholder": "Tell us how we can help you...",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "success": "Thank you! We have received your message and will get back to you soon.",
+      "error": "Something went wrong. Please try again or contact us directly."
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMin": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "messageRequired": "Message is required",
+      "messageMin": "Message must be at least 10 characters"
+    },
+    "info": {
+      "title": "Contact information",
+      "email": "info@example.com",
+      "phone": "+46 70 123 45 67",
+      "address": "Street Address 1, 123 45 City"
+    }
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Latest news, tips and insights.",
+    "readMore": "Read more",
+    "backToBlog": "Back to blog",
+    "publishedAt": "Published",
+    "posts": [
+      {
+        "slug": "first-post",
+        "title": "Welcome to our blog",
+        "excerpt": "Here we share news, insights and tips within our field.",
+        "date": "2026-01-15",
+        "content": "This is an example blog post. Replace this text with real content when customizing the template."
+      },
+      {
+        "slug": "tips-and-advice",
+        "title": "5 tips to get started",
+        "excerpt": "Practical advice to help you take the first steps.",
+        "date": "2026-02-10",
+        "content": "Here are five simple tips to help you get started. Replace this text with content that fits your business."
+      }
+    ]
+  },
+  "FAQ": {
+    "title": "Frequently asked questions",
+    "subtitle": "Find answers to the most common questions here.",
+    "items": [
+      {
+        "question": "How long does it take?",
+        "answer": "It depends on the scope. Contact us and we'll provide a time estimate based on your needs."
+      },
+      {
+        "question": "What does it cost?",
+        "answer": "We tailor quotes to your needs. Contact us for a free assessment."
+      },
+      {
+        "question": "Do you offer ongoing support?",
+        "answer": "Yes, we offer support and follow-up to ensure everything works as expected."
+      },
+      {
+        "question": "How do I get started?",
+        "answer": "Reach out via the contact form and we'll take it from there."
+      }
+    ]
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: {date}",
+    "sections": [
+      {
+        "title": "What data do we collect?",
+        "content": "We collect personal data that you voluntarily provide through our contact forms, such as name, email address, and phone number."
+      },
+      {
+        "title": "How do we use your data?",
+        "content": "Your data is used solely to respond to your inquiry and improve our service. We never sell your data to third parties."
+      },
+      {
+        "title": "Cookies",
+        "content": "We use cookies to improve your experience. Analytical cookies (Google Analytics) are only activated after your consent. We also use cookie-free analytics tools that do not require consent."
+      },
+      {
+        "title": "Your rights",
+        "content": "You have the right to request access to, correction, or deletion of your personal data. Contact us to exercise your rights."
+      }
+    ]
+  },
+  "Footer": {
+    "quickLinks": "Quick links",
+    "contact": "Contact",
+    "followUs": "Follow us",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy"
+  },
+  "CookieBanner": {
+    "message": "We use cookies to improve your experience and analyze traffic.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "learnMore": "Learn more"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "retry": "Try again"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist or has been moved.",
+    "backHome": "Back to homepage"
+  }
+}
