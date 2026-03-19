@@ -17,7 +17,12 @@ import { CookieBanner } from "@/components/shared/CookieBanner";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { env } from "@/env";
 import "../globals.css";
+
+// Triggar Zod-validering av NEXT_PUBLIC_*-variabler vid startup.
+// Om en required variabel saknas kastas ett tydligt felmeddelande.
+void env;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,11 +95,18 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
+  const sameAs = [
+    process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK,
+    process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM,
+    process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN,
+  ].filter(Boolean);
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteName,
     url: siteUrl,
+    ...(sameAs.length > 0 && { sameAs }),
   };
 
   return (
