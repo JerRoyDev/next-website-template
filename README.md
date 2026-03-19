@@ -8,7 +8,9 @@ Produktionsfärdig Next.js 16-mall för flerspråkiga webbplatser. Bygger rent u
 - **Flerspråkig (sv/en)** — Lokaliserade URLs, hreflang-alternates, x-default
 - **GDPR** — Cookie-banner med samtycke, GTM laddas först efter godkännande
 - **Säkerhet** — HSTS, X-Frame-Options, CSP-headers via `vercel.json`, `poweredByHeader: false`
-- **Kontaktformulär** — Server Action + Nodemailer + Zod-validering + rate limiting
+- **Kontaktformulär** — Server Action + Nodemailer + Zod-validering + rate limiting (IP-baserat)
+- **Env-validering** — Zod-baserad validering av required env-variabler vid startup (`src/env.ts`)
+- **GEO** — AI-crawler-regler i `robots.ts`, Organization schema med `sameAs`, dynamisk OG-image
 - **Analytics** — Umami (cookie-fri) + GA4 direkt + Meta Pixel direkt (båda samtyckesbaserade, inga GTM-beroenden)
 - **Felhantering** — `error.tsx`, `global-error.tsx`, `not-found.tsx`
 - **Sitemap & robots.txt** — Dynamiskt genererade med hreflang-alternates per sida
@@ -19,7 +21,7 @@ Produktionsfärdig Next.js 16-mall för flerspråkiga webbplatser. Bygger rent u
 | Kategori | Teknik |
 |---|---|
 | Framework | Next.js 16.1.6, React 19, TypeScript |
-| Styling | Tailwind CSS v4, shadcn/ui (base-nova) |
+| Styling | Tailwind CSS v4, shadcn/ui (base-nova), @tailwindcss/typography |
 | i18n | next-intl 4.8.3 (sv + en, lokaliserade pathnames) |
 | Formulär | react-hook-form + zod 4 + @hookform/resolvers |
 | E-post | Nodemailer 8 (SMTP) |
@@ -56,17 +58,25 @@ Kopiera `.env.example` → `.env.local` och fyll i. Alla variabler:
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | Webbplatsens URL (t.ex. `https://example.com`) | Ja |
 | `NEXT_PUBLIC_SITE_NAME` | Företagsnamn (visas i metadata, mail, footer) | Ja |
-| `SMTP_HOST` | SMTP-server (t.ex. `smtp.gmail.com`) | Ja |
-| `SMTP_PORT` | SMTP-port (default: `587`) | Ja |
-| `SMTP_USER` | SMTP-användarnamn | Ja |
-| `SMTP_PASS` | SMTP-lösenord / app-lösenord | Ja |
-| `CONTACT_EMAIL` | Mottagare av kontaktformulär | Ja |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | E-post (visas på kontaktsida och i footer) | Nej |
+| `NEXT_PUBLIC_CONTACT_PHONE` | Telefonnummer (visas på kontaktsida och i footer) | Nej |
+| `NEXT_PUBLIC_CONTACT_ADDRESS` | Adress (visas på kontaktsida och i footer) | Nej |
+| `NEXT_PUBLIC_SOCIAL_FACEBOOK` | Facebook-URL (döljs automatiskt om tom) | Nej |
+| `NEXT_PUBLIC_SOCIAL_INSTAGRAM` | Instagram-URL (döljs automatiskt om tom) | Nej |
+| `NEXT_PUBLIC_SOCIAL_LINKEDIN` | LinkedIn-URL (döljs automatiskt om tom) | Nej |
+| `SMTP_HOST` | SMTP-server (t.ex. `smtp.gmail.com`) | Ja (kontaktformulär) |
+| `SMTP_PORT` | SMTP-port (default: `587`) | Ja (kontaktformulär) |
+| `SMTP_USER` | SMTP-användarnamn | Ja (kontaktformulär) |
+| `SMTP_PASS` | SMTP-lösenord / app-lösenord | Ja (kontaktformulär) |
+| `CONTACT_EMAIL` | Mottagare av kontaktformulär | Ja (kontaktformulär) |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Umami webbplats-ID | Nej |
 | `NEXT_PUBLIC_UMAMI_URL` | Umami-instansens URL | Nej |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 Measurement ID (direkt, utan GTM) | Nej |
 | `NEXT_PUBLIC_META_PIXEL_ID` | Meta Pixel ID (Facebook/Instagram Ads, utan GTM) | Nej |
 | `NEXT_PUBLIC_GTM_ID` | Google Tag Manager ID (alternativ till direkt GA4/Meta Pixel) | Nej |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console-verifiering | Nej |
+
+> `NEXT_PUBLIC_SITE_URL` och `NEXT_PUBLIC_SITE_NAME` valideras med Zod vid startup via `src/env.ts`. Om de saknas kastas ett tydligt felmeddelande direkt.
 
 ## Projektstruktur
 
@@ -79,7 +89,7 @@ src/
 │   │   ├── tjanster/page.tsx           # Tjänster
 │   │   ├── kontakt/
 │   │   │   ├── page.tsx                # Kontaktformulär
-│   │   │   └── action.ts              # Server Action (Nodemailer + rate limit)
+│   │   │   └── action.ts              # Server Action (Nodemailer + IP-baserat rate limit)
 │   │   ├── blogg/
 │   │   │   ├── page.tsx                # Blogglista
 │   │   │   └── [slug]/page.tsx         # Blogginlägg (med BlogPosting JSON-LD)
@@ -90,8 +100,10 @@ src/
 │   │   └── not-found.tsx               # 404
 │   ├── global-error.tsx                # Root-level felsida
 │   ├── layout.tsx                      # Root layout
+│   ├── opengraph-image.tsx             # Dynamisk OG-image (ImageResponse, fallback för alla sidor)
+│   ├── icon.svg                        # Favicon placeholder (ersätt vid nytt projekt)
 │   ├── sitemap.ts                      # Dynamisk sitemap med hreflang
-│   └── robots.ts                       # robots.txt
+│   └── robots.ts                       # robots.txt (inkl. AI-crawler-regler för GEO)
 ├── components/
 │   ├── layout/                         # Header, Footer
 │   ├── sections/                       # Hero, Features, Testimonials, CTA, FAQ, ContactForm
@@ -105,10 +117,13 @@ src/
 │   ├── metadata.ts                     # getAlternates() — canonical + hreflang-helper
 │   ├── mail.ts                         # Nodemailer SMTP-klient
 │   └── utils.ts                        # cn() (clsx + tailwind-merge)
+├── env.ts                              # Zod-validering av NEXT_PUBLIC_*-variabler
 ├── proxy.ts                            # i18n-middleware (Next.js 16-format)
 messages/
 ├── sv.json                             # Svenska översättningar
 └── en.json                             # Engelska översättningar
+public/
+└── llms.txt                            # GEO: AI-crawler placeholder (llmstxt.org)
 ```
 
 ## Lokaliserade URLs
@@ -203,7 +218,8 @@ Varje sida har individuell `generateMetadata` med:
 - **Open Graph** — Type, siteName, locale (`sv_SE`/`en_US`), URL
 - **Twitter Card** — `summary_large_image`
 - **Robots** — `index: true, follow: true`
-- **JSON-LD** — `BlogPosting` på blogginlägg, `FAQPage` på FAQ-sidan
+- **JSON-LD** — `BlogPosting` (med `dateModified`) på blogginlägg, `FAQPage` på FAQ-sidan, `Organization` med `sameAs` (sociala medier) i root layout
+- **GEO** — Explicit AI-crawler-tillstånd i `robots.ts` (GPTBot, Google-Extended, PerplexityBot, ClaudeBot)
 
 Sitemap genereras dynamiskt med hreflang-alternates för alla sidor och blogginlägg.
 
@@ -222,12 +238,14 @@ Konfigurerat via `vercel.json` och `next.config.ts`:
 
 ## Anpassa för en kund
 
-1. **`.env.local`** — Domän, SMTP, analytics-ID:n
+1. **`.env.local`** — Domän, kontaktinfo, sociala medier, SMTP, analytics-ID:n
 2. **`messages/sv.json` + `en.json`** — Alla texter och blogginnehåll
-3. **`globals.css`** — Färgtema (shadcn/ui CSS-variabler i Oklch-format)
-4. **`FeaturesSection.tsx`** — Byt lucide-react-ikoner
-5. **`Header.tsx`** — Lägg till logotyp
-6. **`public/`** — Bilder, favicon, OG-bild
+3. **`globals.css`** — Färgtema: byt `--primary` och `--accent` i `:root` och `.dark` (Oklch-format, se 60-30-10-kommentaren)
+4. **`src/app/icon.svg`** — Ersätt med riktig favicon/logotyp
+5. **`src/app/opengraph-image.tsx`** — Anpassa OG-bildens layout och färger; per-sida override i `src/app/[locale]/[sida]/opengraph-image.tsx`
+6. **`public/llms.txt`** — Uppdatera med riktig beskrivning och sidlista
+7. **`FeaturesSection.tsx`** — Byt lucide-react-ikoner
+8. **`Header.tsx`** — Lägg till logotypbild (ersätt text-fallback)
 
 ## Utöka mallen
 
