@@ -5,10 +5,18 @@ import { Separator } from "@/components/ui/separator";
 export function Footer() {
   const t = useTranslations("Footer");
   const tNav = useTranslations("Navigation");
-  const tContact = useTranslations("Contact");
 
   const currentYear = new Date().getFullYear();
   const siteName = process.env.NEXT_PUBLIC_SITE_NAME ?? "Company Name";
+
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+  const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE;
+  const contactAddress = process.env.NEXT_PUBLIC_CONTACT_ADDRESS;
+
+  const socialFacebook = process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK;
+  const socialInstagram = process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM;
+  const socialLinkedIn = process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN;
+  const hasSocial = socialFacebook || socialInstagram || socialLinkedIn;
 
   return (
     <footer className="border-t bg-muted/40">
@@ -55,40 +63,53 @@ export function Footer() {
           <div>
             <h2 className="mb-4 font-semibold">{t("contact")}</h2>
             <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <p>{tContact("info.email")}</p>
-              <p>{tContact("info.phone")}</p>
-              <p>{tContact("info.address")}</p>
+              {contactEmail && <p>{contactEmail}</p>}
+              {contactPhone && <p>{contactPhone}</p>}
+              {contactAddress && <p>{contactAddress}</p>}
             </div>
           </div>
 
           {/* Social / Follow */}
-          <div>
-            <h2 className="mb-4 font-semibold">{t("followUs")}</h2>
-            <div className="flex gap-4">
-              {/* Replace # with actual social media links */}
-              <a
-                href="#"
-                className="text-sm text-muted-foreground hover:text-foreground"
-                aria-label="Facebook"
-              >
-                Facebook
-              </a>
-              <a
-                href="#"
-                className="text-sm text-muted-foreground hover:text-foreground"
-                aria-label="Instagram"
-              >
-                Instagram
-              </a>
-              <a
-                href="#"
-                className="text-sm text-muted-foreground hover:text-foreground"
-                aria-label="LinkedIn"
-              >
-                LinkedIn
-              </a>
+          {hasSocial && (
+            <div>
+              <h2 className="mb-4 font-semibold">{t("followUs")}</h2>
+              <div className="flex gap-4">
+                {socialFacebook && (
+                  <a
+                    href={socialFacebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                    aria-label="Facebook"
+                  >
+                    Facebook
+                  </a>
+                )}
+                {socialInstagram && (
+                  <a
+                    href={socialInstagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                    aria-label="Instagram"
+                  >
+                    Instagram
+                  </a>
+                )}
+                {socialLinkedIn && (
+                  <a
+                    href={socialLinkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-foreground"
+                    aria-label="LinkedIn"
+                  >
+                    LinkedIn
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <Separator className="my-8" />
@@ -97,10 +118,7 @@ export function Footer() {
           <p>
             &copy; {currentYear} {siteName}. {t("rights")}
           </p>
-          <Link
-            href="/integritetspolicy"
-            className="hover:text-foreground"
-          >
+          <Link href="/integritetspolicy" className="hover:text-foreground">
             {t("privacy")}
           </Link>
         </div>

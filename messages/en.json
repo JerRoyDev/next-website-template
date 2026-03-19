@@ -160,10 +160,7 @@
       "messageMin": "Message must be at least 10 characters"
     },
     "info": {
-      "title": "Contact information",
-      "email": "info@example.com",
-      "phone": "+46 70 123 45 67",
-      "address": "Street Address 1, 123 45 City"
+      "title": "Contact information"
     }
   },
   "Blog": {

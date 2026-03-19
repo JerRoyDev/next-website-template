@@ -19,6 +19,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { submitContactForm } from "@/app/[locale]/kontakt/action";
+import { env } from "@/env";
 
 function useContactSchema() {
   const t = useTranslations("Contact.validation");
@@ -168,25 +169,34 @@ export function ContactFormSection() {
           <Card>
             <CardContent className="space-y-6 pt-6">
               <h3 className="text-xl font-semibold">{t("info.title")}</h3>
-              <div className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                <a
-                  href={`mailto:${t("info.email")}`}
-                  className="hover:underline"
-                >
-                  {t("info.email")}
-                </a>
-              </div>
-              <div className="flex items-start gap-3">
-                <Phone className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                <a href={`tel:${t("info.phone")}`} className="hover:underline">
-                  {t("info.phone")}
-                </a>
-              </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                <span>{t("info.address")}</span>
-              </div>
+              {env.NEXT_PUBLIC_CONTACT_EMAIL && (
+                <div className="flex items-start gap-3">
+                  <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
+                  <a
+                    href={`mailto:${env.NEXT_PUBLIC_CONTACT_EMAIL}`}
+                    className="hover:underline"
+                  >
+                    {env.NEXT_PUBLIC_CONTACT_EMAIL}
+                  </a>
+                </div>
+              )}
+              {env.NEXT_PUBLIC_CONTACT_PHONE && (
+                <div className="flex items-start gap-3">
+                  <Phone className="mt-0.5 h-5 w-5 text-muted-foreground" />
+                  <a
+                    href={`tel:${env.NEXT_PUBLIC_CONTACT_PHONE}`}
+                    className="hover:underline"
+                  >
+                    {env.NEXT_PUBLIC_CONTACT_PHONE}
+                  </a>
+                </div>
+              )}
+              {env.NEXT_PUBLIC_CONTACT_ADDRESS && (
+                <div className="flex items-start gap-3">
+                  <MapPin className="mt-0.5 h-5 w-5 text-muted-foreground" />
+                  <span>{env.NEXT_PUBLIC_CONTACT_ADDRESS}</span>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
