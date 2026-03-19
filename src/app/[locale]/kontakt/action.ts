@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod";
+import { headers } from "next/headers";
 import { sendContactEmail } from "@/lib/mail";
 
 const contactSchema = z.object({
@@ -29,8 +30,14 @@ export async function submitContactForm(data: unknown) {
     return { success: false, error: "Invalid form data" };
   }
 
-  // Simple in-memory rate limiting (resets on server restart)
-  const ip = "unknown"; // In production, extract from headers
+  // Enkel in-memory rate limiting — nollsätts vid omstart/cold start.
+  // OBS: Fungerar inte reliabelt i serverless (Vercel). För produktionskritisk
+  // rate limiting, byt ut mot Upstash Redis eller Vercel KV.
+  const headerList = await headers();
+  const ip =
+    headerList.get("x-forwarded-for")?.split(",")[0].trim() ??
+    headerList.get("x-real-ip") ??
+    "unknown";
   if (isRateLimited(ip)) {
     return { success: false, error: "Too many submissions" };
   }
