@@ -1,0 +1,28 @@
+# [SITE_NAME]
+
+> [Ersätt med en mening som beskriver vad företaget gör och vem det riktar sig till.]
+
+<!-- =====================================================================
+  llms.txt — Experimental standard (llmstxt.org, september 2024)
+
+  STATUS (mars 2026): Ingen känd AI-crawler (GPTBot, PerplexityBot,
+  Google-Extended, ClaudeBot) har bekräftat att de läser denna fil.
+  Serverlogg-analyser visar noll trafik till llms.txt-filer.
+
+  Filen inkluderas som en hedge ifall standarden tas upp av AI-plattformar.
+  Uppdatera innehållet nedan när detta projekt anpassas.
+  Mer info: https://llmstxt.org
+===================================================================== -->
+
+## Sidor
+
+- [Startsida](/)
+- [Om oss](/om-oss)
+- [Tjänster](/tjanster)
+- [Kontakt](/kontakt)
+- [Blogg](/blogg)
+- [FAQ](/faq)
+
+## Kontakt
+
+- E-post: [Fyll i NEXT_PUBLIC_CONTACT_EMAIL]

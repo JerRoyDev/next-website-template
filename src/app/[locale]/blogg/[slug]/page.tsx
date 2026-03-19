@@ -66,6 +66,7 @@ export default async function BlogPostPage({ params }: Props) {
           headline: t(`posts.${i}.title`),
           description: t(`posts.${i}.excerpt`),
           datePublished: t(`posts.${i}.date`),
+          dateModified: t(`posts.${i}.date`),
           url: canonical,
           publisher: {
             "@type": "Organization",
