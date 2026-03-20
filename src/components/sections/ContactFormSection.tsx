@@ -20,6 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { submitContactForm } from "@/app/[locale]/kontakt/action";
 import { env } from "@/env";
+import { MailPreviewSheet } from "@/components/shared/MailPreviewSheet";
 
 function useContactSchema() {
   const t = useTranslations("Contact.validation");
@@ -47,6 +48,10 @@ export function ContactFormSection() {
   const t = useTranslations("Contact");
   const schema = useContactSchema();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [preview, setPreview] = useState<{
+    notification: string;
+    confirmation: string;
+  } | null>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(schema),
@@ -63,6 +68,7 @@ export function ContactFormSection() {
     const result = await submitContactForm(data);
     if (result.success) {
       setStatus("success");
+      if (result.preview) setPreview(result.preview);
       form.reset();
     } else {
       setStatus("error");
@@ -201,6 +207,15 @@ export function ContactFormSection() {
           </Card>
         </div>
       </div>
+      {preview && (
+        <MailPreviewSheet
+          preview={preview}
+          open={!!preview}
+          onOpenChange={(open) => {
+            if (!open) setPreview(null);
+          }}
+        />
+      )}
     </section>
   );
 }
