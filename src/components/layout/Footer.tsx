@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Separator } from "@/components/ui/separator";
+import { NewsletterSection } from "@/components/sections/NewsletterSection";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -17,6 +18,8 @@ export function Footer() {
   const socialInstagram = process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM;
   const socialLinkedIn = process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN;
   const hasSocial = socialFacebook || socialInstagram || socialLinkedIn;
+  const newsletterEnabled =
+    process.env.NEXT_PUBLIC_NEWSLETTER_ENABLED === "true";
 
   return (
     <footer className="border-t bg-muted/40">
@@ -69,45 +72,52 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Social / Follow */}
-          {hasSocial && (
-            <div>
-              <h2 className="mb-4 font-semibold">{t("followUs")}</h2>
-              <div className="flex gap-4">
-                {socialFacebook && (
-                  <a
-                    href={socialFacebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                    aria-label="Facebook"
-                  >
-                    Facebook
-                  </a>
-                )}
-                {socialInstagram && (
-                  <a
-                    href={socialInstagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                    aria-label="Instagram"
-                  >
-                    Instagram
-                  </a>
-                )}
-                {socialLinkedIn && (
-                  <a
-                    href={socialLinkedIn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                    aria-label="LinkedIn"
-                  >
-                    LinkedIn
-                  </a>
-                )}
-              </div>
+          {/* Newsletter and/or Social */}
+          {(newsletterEnabled || hasSocial) && (
+            <div className="space-y-6">
+              {newsletterEnabled && <NewsletterSection variant="inline" />}
+              {hasSocial && (
+                <div>
+                  {!newsletterEnabled && (
+                    <h2 className="mb-4 font-semibold">{t("followUs")}</h2>
+                  )}
+                  <div className="flex gap-4">
+                    {socialFacebook && (
+                      <a
+                        href={socialFacebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-muted-foreground hover:text-foreground"
+                        aria-label="Facebook"
+                      >
+                        Facebook
+                      </a>
+                    )}
+                    {socialInstagram && (
+                      <a
+                        href={socialInstagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-muted-foreground hover:text-foreground"
+                        aria-label="Instagram"
+                      >
+                        Instagram
+                      </a>
+                    )}
+                    {socialLinkedIn && (
+                      <a
+                        href={socialLinkedIn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-muted-foreground hover:text-foreground"
+                        aria-label="LinkedIn"
+                      >
+                        LinkedIn
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
