@@ -230,6 +230,34 @@
       }
     ]
   },
+  "Mail": {
+    "contactNotification": {
+      "subject": "Nytt kontaktformulär: {name}"
+    },
+    "contactConfirmation": {
+      "subject": "Tack för ditt meddelande",
+      "body": "Vi har mottagit ditt meddelande och återkommer inom kort."
+    }
+  },
+  "MailPreview": {
+    "title": "Mailförhandsgranskning",
+    "description": "Så här ser mailen ut som skickas från kontaktformuläret.",
+    "notification": "Notifikation (till mottagare)",
+    "confirmation": "Bekräftelse (till avsändare)"
+  },
+  "Newsletter": {
+    "title": "Nyhetsbrev",
+    "description": "Prenumerera på vårt nyhetsbrev för att få de senaste nyheterna.",
+    "emailPlaceholder": "din@epost.se",
+    "subscribe": "Prenumerera",
+    "subscribing": "Skickar...",
+    "success": "Tack! Kolla din e-post för att bekräfta din prenumeration.",
+    "error": "Något gick fel. Försök igen.",
+    "validation": {
+      "emailRequired": "E-post krävs",
+      "emailInvalid": "Ange en giltig e-postadress"
+    }
+  },
   "Footer": {
     "quickLinks": "Snabblänkar",
     "contact": "Kontakt",

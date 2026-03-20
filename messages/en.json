@@ -230,6 +230,34 @@
       }
     ]
   },
+  "Mail": {
+    "contactNotification": {
+      "subject": "New contact form: {name}"
+    },
+    "contactConfirmation": {
+      "subject": "Thank you for your message",
+      "body": "We have received your message and will get back to you shortly."
+    }
+  },
+  "MailPreview": {
+    "title": "Mail preview",
+    "description": "This is what the emails from the contact form look like.",
+    "notification": "Notification (to recipient)",
+    "confirmation": "Confirmation (to sender)"
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "description": "Subscribe to our newsletter to get the latest news.",
+    "emailPlaceholder": "your@email.com",
+    "subscribe": "Subscribe",
+    "subscribing": "Sending...",
+    "success": "Thank you! Check your email to confirm your subscription.",
+    "error": "Something went wrong. Please try again.",
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address"
+    }
+  },
   "Footer": {
     "quickLinks": "Quick links",
     "contact": "Contact",
