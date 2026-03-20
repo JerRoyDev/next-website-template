@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch:*)",
+      "Bash(find \"D:\\\\PROJEKT\\\\templates\\\\next-website-template\" -maxdepth 1 -name \"tailwind.config.*\" -o -name \".eslintrc*\" -o -name \".cursorrules\" -o -name \"CLAUDE.md\" 2>/dev/null | head -20)",
+      "Bash(find /d/PROJEKT/templates/next-website-template/src/app/[locale]/kontakt -type f)",
+      "Bash(grep -r \"sendContactEmail\\\\|sendMail\\\\|Nodemailer\\\\|nodemailer\" /d/PROJEKT/templates/next-website-template/src --include=*.ts --include=*.tsx)",
+      "Bash(grep -r \"newsletter\\\\|subscribe\" /d/PROJEKT/templates/next-website-template --include=*.tsx --include=*.ts --include=*.json)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(mkdir -p send)",
+      "Bash(mv providers/smtp.ts send/)",
+      "Bash(mv providers/resend.ts send/)",
+      "Bash(mv providers/console.ts send/)",
+      "Bash(rm -rf providers)",
+      "Bash(mv providers/brevo.ts brevo.ts)",
+      "Bash(pnpm add:*)"
+    ]
+  }
+}
