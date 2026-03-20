@@ -8,7 +8,9 @@ Produktionsfärdig Next.js 16-mall för flerspråkiga webbplatser. Bygger rent u
 - **Flerspråkig (sv/en)** — Lokaliserade URLs, hreflang-alternates, x-default
 - **GDPR** — Cookie-banner med samtycke, GTM laddas först efter godkännande
 - **Säkerhet** — HSTS, X-Frame-Options, CSP-headers via `vercel.json`, `poweredByHeader: false`
-- **Kontaktformulär** — Server Action + Nodemailer + Zod-validering + rate limiting (IP-baserat)
+- **Kontaktformulär** — Server Action + Zod-validering + rate limiting + HTML-mail (React Email) + bekräftelsemail
+- **Mailsystem** — Provider-pattern (SMTP/Resend/Brevo/Console) — välj via env-var, byt utan kodändring
+- **Nyhetsbrev** — Valfri newsletter-signup med pluggbar backend (Brevo-integration inkluderad)
 - **Env-validering** — Zod-baserad validering av required env-variabler vid startup (`src/env.ts`)
 - **GEO** — AI-crawler-regler i `robots.ts`, Organization schema med `sameAs`, dynamisk OG-image
 - **Analytics** — Umami (cookie-fri) + GA4 direkt + Meta Pixel direkt (båda samtyckesbaserade, inga GTM-beroenden)
@@ -24,7 +26,8 @@ Produktionsfärdig Next.js 16-mall för flerspråkiga webbplatser. Bygger rent u
 | Styling | Tailwind CSS v4, shadcn/ui (base-nova), @tailwindcss/typography |
 | i18n | next-intl 4.8.3 (sv + en, lokaliserade pathnames) |
 | Formulär | react-hook-form + zod 4 + @hookform/resolvers |
-| E-post | Nodemailer 8 (SMTP) |
+| E-post | Nodemailer 8 (SMTP) / Resend / Brevo — utbytbara providers |
+| Mailtemplates | React Email (@react-email/components) |
 | Animationer | Motion (framer-motion) |
 | Ikoner | lucide-react |
 | Tema | next-themes (dark mode förberett) |
@@ -64,11 +67,18 @@ Kopiera `.env.example` → `.env.local` och fyll i. Alla variabler:
 | `NEXT_PUBLIC_SOCIAL_FACEBOOK` | Facebook-URL (döljs automatiskt om tom) | Nej |
 | `NEXT_PUBLIC_SOCIAL_INSTAGRAM` | Instagram-URL (döljs automatiskt om tom) | Nej |
 | `NEXT_PUBLIC_SOCIAL_LINKEDIN` | LinkedIn-URL (döljs automatiskt om tom) | Nej |
-| `SMTP_HOST` | SMTP-server (t.ex. `smtp.gmail.com`) | Ja (kontaktformulär) |
-| `SMTP_PORT` | SMTP-port (default: `587`) | Ja (kontaktformulär) |
-| `SMTP_USER` | SMTP-användarnamn | Ja (kontaktformulär) |
-| `SMTP_PASS` | SMTP-lösenord / app-lösenord | Ja (kontaktformulär) |
+| `MAIL_PROVIDER` | Mail-provider: `smtp` (default), `resend`, `brevo`, `console` | Nej (default: smtp) |
+| `MAIL_FROM` | Avsändaradress (krävs för Resend/Brevo) | Beroende på provider |
 | `CONTACT_EMAIL` | Mottagare av kontaktformulär | Ja (kontaktformulär) |
+| `SMTP_HOST` | SMTP-server (t.ex. `smtp.gmail.com`) | Ja (om SMTP) |
+| `SMTP_PORT` | SMTP-port (default: `587`) | Ja (om SMTP) |
+| `SMTP_USER` | SMTP-användarnamn | Ja (om SMTP) |
+| `SMTP_PASS` | SMTP-lösenord / app-lösenord | Ja (om SMTP) |
+| `RESEND_API_KEY` | Resend API-nyckel | Ja (om Resend) |
+| `BREVO_API_KEY` | Brevo API-nyckel (delas med nyhetsbrev) | Ja (om Brevo) |
+| `NEXT_PUBLIC_NEWSLETTER_ENABLED` | Visa newsletter-signup i footer (`true`/tom) | Nej |
+| `NEWSLETTER_PROVIDER` | Newsletter-provider: `brevo` | Ja (om newsletter) |
+| `BREVO_LIST_ID` | Brevo-lista att lägga till prenumeranter i | Ja (om Brevo newsletter) |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Umami webbplats-ID | Nej |
 | `NEXT_PUBLIC_UMAMI_URL` | Umami-instansens URL | Nej |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 Measurement ID (direkt, utan GTM) | Nej |
@@ -89,7 +99,7 @@ src/
 │   │   ├── tjanster/page.tsx           # Tjänster
 │   │   ├── kontakt/
 │   │   │   ├── page.tsx                # Kontaktformulär
-│   │   │   └── action.ts              # Server Action (Nodemailer + IP-baserat rate limit)
+│   │   │   └── action.ts              # Server Action (mail + bekräftelsemail + rate limit)
 │   │   ├── blogg/
 │   │   │   ├── page.tsx                # Blogglista
 │   │   │   └── [slug]/page.tsx         # Blogginlägg (med BlogPosting JSON-LD)
@@ -106,7 +116,7 @@ src/
 │   └── robots.ts                       # robots.txt (inkl. AI-crawler-regler för GEO)
 ├── components/
 │   ├── layout/                         # Header, Footer
-│   ├── sections/                       # Hero, Features, Testimonials, CTA, FAQ, ContactForm
+│   ├── sections/                       # Hero, Features, Testimonials, CTA, FAQ, ContactForm, Newsletter
 │   ├── shared/                         # JsonLd, ThemeProvider, Analytics, CookieBanner, GTM, GA4Script, MetaPixel
 │   └── ui/                             # shadcn/ui-komponenter
 ├── i18n/
@@ -115,7 +125,19 @@ src/
 │   └── request.ts                      # Server-side locale-konfiguration
 ├── lib/
 │   ├── metadata.ts                     # getAlternates() — canonical + hreflang-helper
-│   ├── mail.ts                         # Nodemailer SMTP-klient
+│   ├── mail/
+│   │   ├── index.ts                   # sendMail() — väljer provider via MAIL_PROVIDER
+│   │   ├── send/                      # Transaktionsmail-providers
+│   │   │   ├── smtp.ts               # Nodemailer (default)
+│   │   │   ├── resend.ts             # Resend SDK
+│   │   │   ├── brevo.ts              # Brevo transaktionsmail-API
+│   │   │   └── console.ts            # Dev-provider (loggar till terminal)
+│   │   ├── templates/                 # React Email HTML-templates
+│   │   │   ├── contact-notification.tsx  # Notis till sajägaren
+│   │   │   └── contact-confirmation.tsx  # Bekräftelse till avsändaren
+│   │   └── newsletter/                # Nyhetsbrev-prenumeration
+│   │       ├── action.ts             # subscribeToNewsletter() server action
+│   │       └── brevo.ts              # Brevo kontakt-API
 │   └── utils.ts                        # cn() (clsx + tailwind-merge)
 ├── env.ts                              # Zod-validering av NEXT_PUBLIC_*-variabler
 ├── proxy.ts                            # i18n-middleware (Next.js 16-format)
@@ -238,7 +260,7 @@ Konfigurerat via `vercel.json` och `next.config.ts`:
 
 ## Anpassa för en kund
 
-1. **`.env.local`** — Domän, kontaktinfo, sociala medier, SMTP, analytics-ID:n
+1. **`.env.local`** — Domän, kontaktinfo, sociala medier, mail-provider, analytics-ID:n
 2. **`messages/sv.json` + `en.json`** — Alla texter och blogginnehåll
 3. **`globals.css`** — Färgtema: byt `--primary` och `--accent` i `:root` och `.dark` (Oklch-format, se 60-30-10-kommentaren)
 4. **`src/app/icon.svg`** — Ersätt med riktig favicon/logotyp
@@ -246,6 +268,90 @@ Konfigurerat via `vercel.json` och `next.config.ts`:
 6. **`public/llms.txt`** — Uppdatera med riktig beskrivning och sidlista
 7. **`FeaturesSection.tsx`** — Byt lucide-react-ikoner
 8. **`Header.tsx`** — Lägg till logotypbild (ersätt text-fallback)
+
+## Mailsystem
+
+### Providers — välj via `MAIL_PROVIDER`
+
+| Provider | Env-var | Beskrivning | Kostnad |
+|---|---|---|---|
+| `smtp` (default) | `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` | Nodemailer, funkar med Gmail/valfri SMTP-server | Gratis (Gmail: 500 mail/dag) |
+| `resend` | `RESEND_API_KEY`, `MAIL_FROM` | Resend SDK, bättre leverans, kräver verifierad domän | Gratis: 3 000 mail/mån |
+| `brevo` | `BREVO_API_KEY`, `MAIL_FROM` | Brevo transaktionsmail-API, samma nyckel som nyhetsbrev | Gratis: 300 mail/dag |
+| `console` | — | Loggar mail till terminal, ingen faktisk sändning | — |
+
+### Kontaktformulär
+
+Formuläret skickar **två mail**:
+1. **Notis till sajägaren** — HTML-formaterat med kontaktdata (React Email)
+2. **Bekräftelsemail till avsändaren** — "Tack, vi har mottagit ditt meddelande"
+
+Subjects är lokaliserade via `Mail.*`-nycklar i `messages/sv.json` och `en.json`.
+
+### Mail Preview (Endast för demo)
+
+Mallen innehåller en `MailPreviewSheet`-komponent som visar en förhandsgranskning av skickade mail direkt i webbläsaren.
+
+- **Syfte:** Visa klienten hur transaktionsmail ("Tack för ditt meddelande" / "Ny förfrågan") ser ut visuellt utan att behöva konfigurera en mail-provider.
+- **Funktion:** När kontaktformuläret skickas öppnas en modal som visar både desktop- och mobilvy av mailet.
+- **Viktigt:** Detta är ett **prototypverktyg**. I den slutgiltiga produktionen bör denna preview tas bort eller inaktiveras när riktiga mailtjänster implementeras.
+
+### Förhandsgranska mailtemplates
+
+React Email har en inbyggd dev-server för att se templates i browsern med live-reload:
+
+```bash
+pnpm email:dev
+```
+
+Öppnar `localhost:3000` med alla templates renderade. Du kan testa responsivitet och skicka testmail direkt därifrån — utan att behöva konfigurera SMTP.
+
+### Nyhetsbrev
+
+Valfritt — aktivera med `NEXT_PUBLIC_NEWSLETTER_ENABLED=true`.
+
+Visar en signup-ruta i footern. Backend är pluggbar via `NEWSLETTER_PROVIDER`. Brevo-integration inkluderad — Brevo hanterar dubbel opt-in (GDPR) och ger klienten en dashboard med drag-and-drop-editor för nyhetsbrev.
+
+### Quick start — vanliga scenarier
+
+**Enklast möjligt (SMTP, inget nyhetsbrev):**
+```bash
+MAIL_PROVIDER=smtp
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=din@gmail.com
+SMTP_PASS=xxxx-xxxx-xxxx-xxxx    # Gmail app-lösenord
+CONTACT_EMAIL=info@kunddomän.se
+```
+
+**Brevo för allt (transaktionsmail + nyhetsbrev):**
+```bash
+MAIL_PROVIDER=brevo
+MAIL_FROM=noreply@kunddomän.se
+CONTACT_EMAIL=info@kunddomän.se
+BREVO_API_KEY=xkeysib-...
+NEXT_PUBLIC_NEWSLETTER_ENABLED=true
+NEWSLETTER_PROVIDER=brevo
+BREVO_LIST_ID=3
+```
+
+**Resend för mail, Brevo för nyhetsbrev:**
+```bash
+MAIL_PROVIDER=resend
+RESEND_API_KEY=re_...
+MAIL_FROM=noreply@kunddomän.se
+CONTACT_EMAIL=info@kunddomän.se
+NEXT_PUBLIC_NEWSLETTER_ENABLED=true
+NEWSLETTER_PROVIDER=brevo
+BREVO_API_KEY=xkeysib-...
+BREVO_LIST_ID=3
+```
+
+**Utveckling (inga credentials behövs):**
+```bash
+MAIL_PROVIDER=console
+CONTACT_EMAIL=test@example.com
+```
 
 ## Utöka mallen
 
