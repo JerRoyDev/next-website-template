@@ -34,7 +34,10 @@ export function Header() {
 
   function switchLocale() {
     const nextLocale: Locale = locale === "sv" ? "en" : "sv";
-    router.replace(pathname as "/", { locale: nextLocale });
+    // usePathname() returns the resolved path (e.g. /blogg/my-post).
+    // next-intl router resolves it to the correct locale route at runtime.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    router.replace(pathname as any, { locale: nextLocale });
   }
 
   return (

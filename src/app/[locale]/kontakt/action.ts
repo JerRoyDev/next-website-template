@@ -10,10 +10,10 @@ import { ContactNotificationEmail } from "@/lib/mail/templates/contact-notificat
 import { ContactConfirmationEmail } from "@/lib/mail/templates/contact-confirmation";
 
 const contactSchema = z.object({
-  name: z.string().min(1).min(2),
-  email: z.string().min(1).email(),
+  name: z.string().min(2),
+  email: z.string().email(),
   phone: z.string().optional(),
-  message: z.string().min(1).min(10),
+  message: z.string().min(10),
 });
 
 const submissions = new Map<string, number[]>();

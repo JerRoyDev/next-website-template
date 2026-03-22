@@ -20,8 +20,8 @@ const envSchema = z.object({
   NEXT_PUBLIC_SOCIAL_FACEBOOK: z.string().url().optional().or(z.literal("")),
   NEXT_PUBLIC_SOCIAL_INSTAGRAM: z.string().url().optional().or(z.literal("")),
   NEXT_PUBLIC_SOCIAL_LINKEDIN: z.string().url().optional().or(z.literal("")),
-  NEXT_PUBLIC_NEWSLETTER_ENABLED: z.string().optional(),
-  NEXT_PUBLIC_MAIL_PREVIEW: z.string().optional(),
+  NEXT_PUBLIC_NEWSLETTER_ENABLED: z.enum(["true", "false"]).optional(),
+  NEXT_PUBLIC_MAIL_PREVIEW: z.enum(["true", "false"]).optional(),
 });
 
 // Explicit property access required — Next.js only inlines individual

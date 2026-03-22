@@ -4,8 +4,8 @@ import { Geist } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing, type Locale } from "@/i18n/routing";
-import { getPathname } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
+import { getAlternates } from "@/lib/metadata";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { UmamiAnalytics } from "@/components/shared/UmamiAnalytics";
 import { GTMScript } from "@/components/shared/GTMScript";
@@ -50,12 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata.home" });
 
-  const canonicalPath = `/${locale}`;
-  const languages: Record<string, string> = {};
-  for (const l of routing.locales) {
-    languages[l] = `${siteUrl}/${l}`;
-  }
-  languages["x-default"] = languages[routing.defaultLocale];
+  const { canonical, languages } = getAlternates("/", locale);
 
   return {
     metadataBase: new URL(siteUrl),
@@ -64,15 +59,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       template: `%s | ${siteName}`,
     },
     description: t("description", { siteName }),
-    alternates: {
-      canonical: `${siteUrl}${canonicalPath}`,
-      languages,
-    },
+    alternates: { canonical, languages },
     openGraph: {
       type: "website",
       siteName,
       locale: localeMap[locale] ?? "sv_SE",
-      url: `${siteUrl}${canonicalPath}`,
+      url: canonical,
     },
     twitter: {
       card: "summary_large_image",
